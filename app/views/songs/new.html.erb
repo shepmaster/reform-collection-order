@@ -1,0 +1,16 @@
+<%= form_for @song do |f| %>
+    <%= f.text_field :name %>
+    <!-- Reverse the artists as an example of the view picking an alternate order -->
+    <% @song.artists.reverse.each do |artist| %>
+        <!-- Using the ID as the "array index" doesn't help -->
+        <%= f.fields_for :artists, artist, child_index: artist.id do |ff| %>
+            <!-- Adding a hidden ID doesn't help -->
+            <%= ff.hidden_field :id %>
+            <label>
+                <%= ff.check_box :selected %>
+                <%= ff.object.name %>
+            </label>
+        <% end %>
+    <% end %>
+    <%= f.submit %>
+<% end %>
